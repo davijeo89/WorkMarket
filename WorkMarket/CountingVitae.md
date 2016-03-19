@@ -27,4 +27,4 @@ ggplot(data=h, aes(x=Character, y=Frequency, fill=Character)) +
   geom_bar(stat="identity") + ggtitle("Frequency of Alphanumeric Characters in  my Resume")
 ```
 
-![plot of chunk plot](figure/plot-1.png)
+![plot of chunk plot](figure/ResumeFreqChar.png)
