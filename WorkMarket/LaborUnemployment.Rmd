@@ -22,9 +22,11 @@ Recessions <- data.frame(xmin=Start, xmax=End, ymin=-Inf, ymax=Inf)
 a = a + geom_rect(data=Recessions, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), alpha=0.5, inherit.aes = FALSE)
 
 a + ggtitle("Labor Productivity in US and Unemployment Rate") + xlab("Quarters from 1948-20015") + ylab("%Change in Labor Producivity from Previous Quarter, Unemployment Rate %")
-```
-Understandbly, there is a sharp decrease in labor productivity during a recession. What is interesting is the gradual depression (i.e. decrease) of the change in productivity. In other words, pre-computer age there were large increases in labor productivity greater than 10%, sometimes more than 20%. In more recent times, change in labor productivity has been no more and has hovered around 5% since the Great Recession. My theory is the shift of manufactering jobs from Stateside to oversees. I am assuming the main driver in productivity is manufacting. What drives increases in productivity is newer technology and/or better utilization of resources. But as the labor force in America has shifted to inside an office and sitting at a desk there is only so much one can do to make the average office worker more productive. 
 
+
+```
+
+Understandably, there is a sharp decrease in labor productivity during a recession. What is interesting is the gradual depression (i.e. decrease) of the change in productivity. In other words, pre-computer age there were large increases in labor productivity greater than 10%, sometimes more than 20%. In more recent times, change in labor productivity has been no more and has hovered around 5% since the Great Recession. My theory is the shift of manufacturing jobs from Stateside to oversees. I am assuming the main driver in productivity is manufacturing. What drives increases in productivity is newer technology and/or better utilization of resources. But as the labor force in America has shifted to inside an office and sitting at a desk there is only so much one can do to make the average office worker more productive.
 
 
 
