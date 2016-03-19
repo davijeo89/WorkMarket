@@ -9,13 +9,6 @@ Here we look at the frequency of alphanumeric characters in a plain text formatt
 ```r
 library(stringr)
 library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 3.2.4
-```
-
-```r
 filename = "resumetext.txt"
 raw_text = readLines(filename) ##This gives a 45-length vector of my resume, i.e. my resume was 45 lines long in plain text format
 
