@@ -4,29 +4,34 @@ author: "David Lara"
 date: "March 19, 2016"
 output: html_document
 ---
-Here we look at the quarterly non-farm labor productivity in America since 1948 and compare it to the quarterly non-farm unemployment rate. Both data sets are from the Bureau of Labor Statistics. The labor productivity is the percent change from the previous quarter. Here we look at the quarterly non-farm labor productivity in America since 1948 and compare it to the quarterly non-farm unemployment rate. Both data sets are from the Bureau of Labor Statistics. The labor productivity is the percent change from the previous quarter. I could not get the API pulldown to work so I exported the data into Excel and preprocessed the data a bit (change the format) to make it more compatible with R.
+Here we look at the quarterly non-farm labor productivity in America since 1948 and compare it to the quarterly non-farm unemployment rate. Both data sets are from the Bureau of Labor Statistics. The labor productivity is the percent change from the previous quarter. The labor productivity is the percent change from the previous quarter. I could not get the API pulldown to work so I exported the data into Excel and preprocessed the data a bit (change the format, I stripped the title and explanations and then transposed the data) to make it more compatible with R.
+
+The stacking warning is expected and is caused by the labor productivity values being negative and positive. The ggplot/lubridate warnings are expected since I built this in a older version of R. 
 ```{r, plot, echo=FALSE}
 library(ggplot2)
+library(lubridate)
+##Reading the data
 data = read.csv("labor.csv", header = TRUE)
 data=data.frame(data)
+data$Time = ymd(data$Time) ##ymd converts the character values into time y-m-d format
 ##Setting up a basic bar chart for labor producviity change and line graph for the unemployment rate
 a = ggplot(data = data, aes(x = Time, y = Productivity, ymax = 25, ymin = -15, color=Productivity)) + geom_bar(stat = "identity") 
 a = a + geom_line(data=data, aes(x=Time, y=Unemployment, group= 1), colour="red")
 
-##We can now shade in the recessions on the graph. Dates are from https://en.wikipedia.org/wiki/List_of_recessions_in_the_United_States. Start and ending dates are rounded to the nearest quarter
+##We can now shade in the recessions on the graph. Dates are from https://en.wikipedia.org/wiki/List_of_recessions_in_the_United_States. 
 
-Start = c("1948-10-01", "1953-07-01", "1957-07-01", "1960-04-01", "1969-10-01", "1973-10-01", "1980-01-01", "1981-07-01", "1990-07-01", "2001-04-01", "2008-01-01") 
-End =   c("1949-10-01", "1954-04-01", "1958-04-01", "1961-01-01", "1970-10-01", "1975-04-01", "1980-07-01", "1982-10-01", "1991-04-01", "2001-10-01", "2009-07-01")
+##Start and ending dates are rounded to the nearest quarter
+Start = ymd(c("1948-10-01", "1953-07-01", "1957-07-01", "1960-04-01", "1969-10-01", "1973-10-01", "1980-01-01", "1981-07-01", "1990-07-01", "2001-04-01", "2008-01-01"))
+End =   ymd(c("1949-10-01", "1954-04-01", "1958-04-01", "1961-01-01", "1970-10-01", "1975-04-01", "1980-07-01", "1982-10-01", "1991-04-01", "2001-10-01", "2009-07-01"))
+
 Recessions <- data.frame(xmin=Start, xmax=End, ymin=-Inf, ymax=Inf)
 
 a = a + geom_rect(data=Recessions, aes(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax), alpha=0.5, inherit.aes = FALSE)
-
-a + ggtitle("Labor Productivity in US and Unemployment Rate") + xlab("Quarters from 1948-20015") + ylab("%Change in Labor Producivity from Previous Quarter, Unemployment Rate %")
+a + ggtitle("Labor Productivity in US and Unemployment Rate") + xlab("Quarters from 1948-20015") + ylab("%Change in Labor Producivity from Previous Quarter, Unemployment Rate %") 
 
 
 ```
 
-Understandably, there is a sharp decrease in labor productivity during a recession. What is interesting is the gradual depression (i.e. decrease) of the change in productivity. In other words, pre-computer age there were large increases in labor productivity greater than 10%, sometimes more than 20%. In more recent times, change in labor productivity has been no more and has hovered around 5% since the Great Recession. My theory is the shift of manufacturing jobs from Stateside to oversees. I am assuming the main driver in productivity is manufacturing. What drives increases in productivity is newer technology and/or better utilization of resources. But as the labor force in America has shifted to inside an office and sitting at a desk there is only so much one can do to make the average office worker more productive.
-
+Understandably, there is a sharp decrease in labor productivity during a recession. What is interesting is the gradual depression (i.e. decrease) of the change in productivity. In other words, pre-computer age there were large increases in labor productivity greater than 10%, sometimes more than 20%. In more recent times, change in labor productivity has been no more and has hovered around 5% since the Great Recession. My theory is the shift of manufacturing jobs from Stateside to oversees. I am assuming the main driver in productivity is manufacturing. What drives increases in productivity is newer technology and/or better utilization of resources. But as the labor force in America has shifted to inside an office and sitting at a desk there is only so much one can do to make the average office worker more productive. The decreasing in the changes to labor productivity could also be the decrease in major techonology advances. Right after WWII, America had a large increase in working men returning from the war. Followed by great advances in science and technology. While in the past 15 years, we have seen faster computers. But the increase in processing speed is not as substantial as the invention of the computer. 
 
 

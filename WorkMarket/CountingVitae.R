@@ -1,4 +1,4 @@
-CountingVitae = function(...){
+CountingVitae = function(filename){
 ##  
 ##
 ##This simply script reads a plain text document and makes a visally appealing 
