@@ -1,0 +1,63 @@
+I downloaded the NYC_Jobs as a .csv and converted it to an Access database to run queries on. 
+
+1.	Find the agency with the most openings
+
+I found using the following SQL query to be the Department of Health with 2768 job postings
+
+SELECT Agency, TotalJobPostings
+FROM   (SELECT Agency, SUM(numofPositions) AS TotalJobPostings
+             FROM    NYC_Jobs
+             GROUP BY Agency)
+ORDER BY TotalJobPostings DESC;
+
+Since most jobs are posted both internally and externally we find only the distinct jobs. The Department of Health again leads the pack with 1331 job postings.
+
+SELECT Agency, TotalJobPostings
+FROM   (SELECT Agency, SUM(numofPositions) AS TotalJobPostings
+             FROM    (SELECT DISTINCT Agency, numofPositions, BusinessTitle
+                           FROM    NYC_Jobs) 
+             GROUP BY Agency) 
+ORDER BY TotalJobPostings DESC
+
+2.	Which departments have the highest and lowest paying positions. 
+
+This I took different routes. I found the highest/lowest upper and lower ranges for both salaried positions. 
+
+i.	This highest annual lower range pay is $213,00 as the Deputy Chief City ME for the Department of Health
+ii.	This highest annual upper range pay is $218,799 as the physician for the Bureau of STD Control within the Department of Health
+iii.	The lowest annual lower range pay is $25,997 as a part-time Clerical Associate in the Dept. of Environmental Protection.
+iv.	The lowest annual upper range pay is $29,000 as a part-time Customer Service Representative in the Administration Trails and Hearings.
+
+v.	This highest hourly lower range pay is $71/hr as a school physician in the Dept of Health.
+vi.	This highest hourly upper range pay is $87/hr as Director of Adult Immunizations in the Dept. of Health
+vii.	The lowest hourly lower range pay is $9/hr as a College Aide in the Office of Collective Bargaining.
+viii.	The lowest hourly upper range pay is $10/hr as a College Aide in the Dept. of Citywide Admin Services
+
+I used this query and modified it each time to get my pay amounts
+
+SELECT Agency, BusinessTitle, SalaryFrequency, SalaryRangeFrom, SalaryRangeTo
+FROM   NYC_Jobs
+WHERE (SalaryFrequency = 'Hourly')
+ORDER BY SalaryRangeTo DESC
+
+
+3.	Which jobs are the hardest to fill. 
+
+This is more challenging since we can look at multiple variables. Many variables can be both consequential and beneficial for HR to fill. For instance, highest paying jobs probably require the most experience and/or education which shrinks the job pool. But with only a handful of qualified applicants, the decision might be easier but a higher pay might attract more candidates. Conversely, an entry-level position might have thousands of applicants for one position. HR might have to shift through hundreds of those and interview tens of people to find a qualified hire. Jobs that have been posted the longest time might be hard to fill. This could also because the hiring manager forgot to remove the posting after a hire was made. We can also look at the shifts the applicant would be working. A third shift might not be as appealing and therefore be harder to fill.  In effort to complete this task and send in my application to Work Market I will look at two variables. Reserve more discussion and research for a later date.
+
+The two variables this report looks at are: 
+
+Posting date: The longer the job has been posted is assumed to be harder to fill
+
+Job description: Particularly, I searched for whether a higher degree is looked for (Master's or Doctorate). A job that requires a Doctorates’ or 
+more is assumed to be harder to fill
+
+I originally planned to look at internal vs external job postings. Going through the analysis, I found that most the jobs were posted both internally and externally. So the posting type was not a useful factor to consider. I also planned to differentiate masters’ and doctoral requirements. But after looking at postings the qualification listed both as requirements.
+
+I found the Project Manager in the Dept. Environmental Protection is the hardest to fill. 
+
+SELECT Agency, BusinessTitle, PostingDate, MQR
+FROM   (SELECT Agency, BusinessTitle, PostingDate, MinimumQualRequirements AS MQR
+FROM    NYC_Jobs
+WHERE  (MinimumQualRequirements LIKE '%doctor%'))
+ORDER BY PostingDate
