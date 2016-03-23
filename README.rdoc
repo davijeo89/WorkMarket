@@ -1,9 +1,9 @@
-This is work my Work Market application as a Data Analyst. The challanges were completed in RStudio. Use the .md files to view my results/code. 
+This is work my Work Market application as a Data Analyst. Two of challanges were completed in RStudio and the Friendly Compeition was completed using SQL. Use the .md files to view my RStudio results/code. 
 
 The countingvitae.md looks at the frequency of alphanumeric characters in my resume. Whitespace and symbols are stripped out.
 
 The LaborUnemployed.md looks at change in labor productivty and the unemployment rate from the BLS. 
 
-The friendlycompetition.md looks at the .csv table of government jobs in NYC. 
+The friendlycompetition.txt looks at the .csv table of government jobs in NYC. I converted the .csv to an Access database then used SQL to find my information. 
 
 The figure folder has the plots from countingvitae.md and laborunemployment.md. 
