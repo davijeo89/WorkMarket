@@ -1,4 +1,4 @@
-This is for work my Work Market application as a Data Analyst. Two of challanges were completed in RStudio and the Friendly Compeition was completed using SQL. Use the .md files to view my RStudio results/code. 
+This is for work my Work Market application as a Data Analyst and other jobs I apply to. Two of challanges were completed in RStudio and the Friendly Compeition was completed using SQL. Use the .md files to view my RStudio results/code. 
 
 I also did the CountingVitae challange in python. It is also included. Figure is in figure folder
 
